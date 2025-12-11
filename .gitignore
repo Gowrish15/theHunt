@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# Stable Baselines 3 models
+*.zip
+*.pth
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Keep output directory and its contents
+!output/
