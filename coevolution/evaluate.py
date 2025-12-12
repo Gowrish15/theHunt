@@ -118,59 +118,6 @@ def run_baseline_comparison():
     return results
 
 
-def run_cross_cycle_tournament():
-    """Test all predators against all prey versions."""
-    cycles = get_available_cycles()
-    if len(cycles) < 2:
-        print("Need at least 2 cycles for tournament!")
-        return
-    
-    print("\n=== CROSS-CYCLE TOURNAMENT ===")
-    
-    # Load all models
-    models = {}
-    for c in cycles:
-        pred, prey = load_models(c)
-        models[c] = {'pred': pred, 'prey': prey}
-    
-    # Build matchup matrix
-    n = len(cycles)
-    matrix = np.zeros((n, n))
-    
-    print("\nRunning matchups...")
-    for i, pred_cycle in enumerate(cycles):
-        for j, prey_cycle in enumerate(cycles):
-            result = evaluate(models[pred_cycle]['pred'], models[prey_cycle]['prey'])
-            matrix[i, j] = result['catch_rate']
-            print(f"  Pred C{pred_cycle} vs Prey C{prey_cycle}: {result['catch_rate']:.1%}")
-    
-    # Plot heatmap
-    fig, ax = plt.subplots(figsize=(10, 8))
-    im = ax.imshow(matrix, cmap='RdYlGn', vmin=0, vmax=1)
-    
-    ax.set_xticks(range(n))
-    ax.set_yticks(range(n))
-    ax.set_xticklabels([f"Prey C{c}" for c in cycles])
-    ax.set_yticklabels([f"Pred C{c}" for c in cycles])
-    
-    # Add text annotations
-    for i in range(n):
-        for j in range(n):
-            text = ax.text(j, i, f"{matrix[i, j]:.0%}", ha="center", va="center", 
-                          color="black" if 0.3 < matrix[i, j] < 0.7 else "white")
-    
-    ax.set_title("Cross-Cycle Tournament (Catch Rate)")
-    ax.set_xlabel("Prey Generation")
-    ax.set_ylabel("Predator Generation")
-    
-    plt.colorbar(im, label="Catch Rate")
-    plt.tight_layout()
-    
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    plt.savefig(os.path.join(OUTPUT_DIR, "tournament_matrix.png"), dpi=150)
-    print(f"\nSaved tournament matrix to {OUTPUT_DIR}/tournament_matrix.png")
-    
-    return matrix, cycles
 
 
 def analyze_progression():
@@ -310,6 +257,48 @@ def generate_highlight_gifs():
         )
 
 
+def run_cross_cycle_tournament():
+    """Test selected predators against selected prey versions."""
+    # Only use cycles 1,5,10,15,20 if available
+    all_cycles = get_available_cycles()
+    selected = [c for c in [1,5,10,15,20] if c in all_cycles]
+    if len(selected) < 2:
+        print("Need at least 2 selected cycles for tournament!")
+        return
+    print(f"\n=== CROSS-CYCLE TOURNAMENT (Cycles: {selected}) ===")
+    models = {}
+    for c in selected:
+        pred, prey = load_models(c)
+        models[c] = {'pred': pred, 'prey': prey}
+    n = len(selected)
+    matrix = np.zeros((n, n))
+    print("\nRunning matchups...")
+    for i, pred_cycle in enumerate(selected):
+        for j, prey_cycle in enumerate(selected):
+            result = evaluate(models[pred_cycle]['pred'], models[prey_cycle]['prey'])
+            matrix[i, j] = result['catch_rate']
+            print(f"  Pred C{pred_cycle} vs Prey C{prey_cycle}: {result['catch_rate']:.1%}")
+    # Plot heatmap
+    fig, ax = plt.subplots(figsize=(8, 6))
+    im = ax.imshow(matrix, cmap='RdYlGn', vmin=0, vmax=1)
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    ax.set_xticklabels([f"Prey C{c}" for c in selected])
+    ax.set_yticklabels([f"Pred C{c}" for c in selected])
+    for i in range(n):
+        for j in range(n):
+            text = ax.text(j, i, f"{matrix[i, j]:.0%}", ha="center", va="center", color="black" if 0.3 < matrix[i, j] < 0.7 else "white")
+    ax.set_title("Cross-Cycle Tournament (Selected Cycles)")
+    ax.set_xlabel("Prey Generation")
+    ax.set_ylabel("Predator Generation")
+    plt.colorbar(im, label="Catch Rate")
+    plt.tight_layout()
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    plt.savefig(os.path.join(OUTPUT_DIR, "tournament_matrix_selected.png"), dpi=150)
+    print(f"\nSaved tournament matrix to {OUTPUT_DIR}/tournament_matrix_selected.png")
+    return matrix, selected
+
+
 def main():
     import sys
     
@@ -339,9 +328,8 @@ def main():
     baseline_results = run_baseline_comparison()
     
     if baseline_results and len(baseline_results) >= 2:
-        run_cross_cycle_tournament()
-        analyze_progression()
         generate_highlight_gifs()
+        run_cross_cycle_tournament()
     
     print("\n" + "=" * 60)
     print("Evaluation complete!")
