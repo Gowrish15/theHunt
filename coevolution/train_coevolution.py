@@ -10,9 +10,11 @@ from stable_baselines3.common.env_util import make_vec_env
 from predator_prey_multi_env import PredatorTrainingEnv, PreyTrainingEnv, SharedConfig
 
 # === CONFIGURATION ===
-RUN_NAME = "toroidal_with_obstacles"  # Change this for different experiments
+RUN_NAME = os.environ.get("RUN_NAME", "toroidal_with_obstacles")
 N_CYCLES = 20
-N_ENVS = 12                # Match your 12 threads
+N_ENVS = int(os.environ.get("N_ENVS", "12"))
+SKIP_GIFS = os.environ.get("SKIP_GIFS", "False").lower() == "true"
+
 OUTPUT_DIR = os.path.join("output", RUN_NAME)
 MODEL_DIR = os.path.join("models", RUN_NAME)
 
@@ -28,6 +30,9 @@ POLICY_KWARGS = dict(activation_fn=nn.ReLU, net_arch=[64, 64])
 
 def generate_gif(pred_model, prey_model, cycle, filename=None, max_frames=1000):
     """Generates a GIF of a single episode between the two models."""
+    if SKIP_GIFS:
+        return
+
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
 

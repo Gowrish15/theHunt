@@ -1,0 +1,26 @@
+{
+  "toroidal_with_obstacles": {
+    "toroidal": true,
+    "obstacles": 0.05,
+    "final_catch_rate": 22.8,
+    "cycles": 20
+  },
+  "toroidal_no_obstacles": {
+    "toroidal": true,
+    "obstacles": 0.0,
+    "final_catch_rate": 6.800000000000001,
+    "cycles": 20
+  },
+  "bounded_with_obstacles": {
+    "toroidal": false,
+    "obstacles": 0.05,
+    "final_catch_rate": 27.200000000000003,
+    "cycles": 20
+  },
+  "bounded_no_obstacles": {
+    "toroidal": false,
+    "obstacles": 0.0,
+    "final_catch_rate": 29.600000000000005,
+    "cycles": 20
+  }
+}

@@ -1,0 +1,279 @@
+C:\Users\Harit\Desktop\TheHunt\.venv\Lib\site-packages\stable_baselines3\ppo\ppo.py:155: UserWarning: You have specified a mini-batch size of 1536, but because the `RolloutBuffer` is of size `n_steps * n_envs = 1024`, after every 0 untruncated mini-batches, there will be a truncated mini-batch of size 1024
+We recommend using a `batch_size` that is a factor of `n_steps * n_envs`.
+Info: (n_steps=256 and n_envs=4)
+  warnings.warn(
+C:\Users\Harit\Desktop\TheHunt\.venv\Lib\site-packages\stable_baselines3\ppo\ppo.py:155: UserWarning: You have specified a mini-batch size of 1536, but because the `RolloutBuffer` is of size `n_steps * n_envs = 1024`, after every 0 untruncated mini-batches, there will be a truncated mini-batch of size 1024
+We recommend using a `batch_size` that is a factor of `n_steps * n_envs`.
+Info: (n_steps=256 and n_envs=4)
+  warnings.warn(
+=== STARTING ADVERSARIAL CO-EVOLUTION ===
+Predator Speed: 100% | Prey Speed: 50.0%
+Grid Size: 30x30
+Prey Count: 50
+Max Steps per Episode: 500
+Creating NEW Predator...
+Creating NEW Prey...
+
+--- Cycle 1/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 12.4%
+   [Predator] Steps: 50000 | Catch Rate: 22.4%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 22.4%]
+   [Prey] Steps: 25000 | Catch Rate: 34.0%
+   -> Prey Goal Reached!
+Result: 18.6 ± 14.5 caught | First catch @ step 29 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_1.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_1.gif
+
+--- Cycle 2/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 54.0%
+   [Predator] Steps: 50000 | Catch Rate: 51.6%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 34.4%]
+   [Prey] Steps: 25000 | Catch Rate: 16.4%
+   -> Prey Goal Reached!
+Result: 0.2 ± 0.4 caught | First catch @ step 74 | Starved: 4/5
+Generating GIF: output\bounded_no_obstacles\cycle_2.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_2.gif
+
+--- Cycle 3/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 22.4%
+   [Predator] Steps: 50000 | Catch Rate: 18.0%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 21.6%]
+   [Prey] Steps: 25000 | Catch Rate: 12.4%
+   -> Prey Goal Reached!
+Result: 4.2 ± 3.4 caught | First catch @ step 15 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_3.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_3.gif
+
+--- Cycle 4/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 16.0%
+   [Predator] Steps: 50000 | Catch Rate: 16.8%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 9.2%]
+   [Prey] Steps: 25000 | Catch Rate: 13.2%
+   -> Prey Goal Reached!
+Result: 7.8 ± 2.1 caught | First catch @ step 62 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_4.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_4.gif
+
+--- Cycle 5/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 9.2%
+   [Predator] Steps: 50000 | Catch Rate: 13.2%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 16.4%]
+   [Prey] Steps: 25000 | Catch Rate: 14.4%
+   -> Prey Goal Reached!
+Result: 7.4 ± 6.2 caught | First catch @ step 135 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_5.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_5.gif
+
+--- Cycle 6/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 16.4%
+   [Predator] Steps: 50000 | Catch Rate: 39.6%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 36.4%]
+   [Prey] Steps: 25000 | Catch Rate: 17.2%
+   -> Prey Goal Reached!
+Result: 16.2 ± 11.1 caught | First catch @ step 8 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_6.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_6.gif
+
+--- Cycle 7/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 43.6%
+   [Predator] Steps: 50000 | Catch Rate: 47.6%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 63.6%]
+   [Prey] Steps: 25000 | Catch Rate: 28.0%
+   -> Prey Goal Reached!
+Result: 21.8 ± 14.1 caught | First catch @ step 19 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_7.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_7.gif
+
+--- Cycle 8/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 40.8%
+   [Predator] Steps: 50000 | Catch Rate: 42.0%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 40.0%]
+   [Prey] Steps: 25000 | Catch Rate: 24.4%
+   -> Prey Goal Reached!
+Result: 33.2 ± 12.7 caught | First catch @ step 7 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_8.gif...
+Captured 274 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_8.gif
+
+--- Cycle 9/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 38.4%
+   [Predator] Steps: 50000 | Catch Rate: 53.2%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 51.2%]
+   [Prey] Steps: 25000 | Catch Rate: 42.0%
+   [Prey] Steps: 50000 | Catch Rate: 47.6%
+Result: 7.4 ± 3.5 caught | First catch @ step 34 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_9.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_9.gif
+
+--- Cycle 10/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 58.0%
+   [Predator] Steps: 50000 | Catch Rate: 52.8%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 35.6%]
+   [Prey] Steps: 25000 | Catch Rate: 21.6%
+   -> Prey Goal Reached!
+Result: 15.2 ± 11.3 caught | First catch @ step 73 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_10.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_10.gif
+
+--- Cycle 11/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 32.0%
+   [Predator] Steps: 50000 | Catch Rate: 18.8%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 28.0%]
+   [Prey] Steps: 25000 | Catch Rate: 13.2%
+   -> Prey Goal Reached!
+Result: 4.8 ± 3.5 caught | First catch @ step 19 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_11.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_11.gif
+
+--- Cycle 12/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 20.8%
+   [Predator] Steps: 50000 | Catch Rate: 25.2%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 14.8%]
+   [Prey] Steps: 25000 | Catch Rate: 6.4%
+   -> Prey Goal Reached!
+Result: 13.2 ± 10.4 caught | First catch @ step 8 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_12.gif...
+Captured 418 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_12.gif
+
+--- Cycle 13/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 52.8%
+   [Predator] Steps: 50000 | Catch Rate: 22.0%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 12.8%]
+   [Prey] Steps: 25000 | Catch Rate: 6.0%
+   -> Prey Goal Reached!
+Result: 0.0 ± 0.0 caught | First catch @ step 101 | Starved: 5/5
+Generating GIF: output\bounded_no_obstacles\cycle_13.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_13.gif
+
+--- Cycle 14/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 45.6%
+   [Predator] Steps: 50000 | Catch Rate: 28.8%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 19.6%]
+   [Prey] Steps: 25000 | Catch Rate: 31.6%
+   -> Prey Goal Reached!
+Result: 12.0 ± 6.6 caught | First catch @ step 5 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_14.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_14.gif
+
+--- Cycle 15/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 58.8%
+   [Predator] Steps: 50000 | Catch Rate: 49.2%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 16.0%]
+   [Prey] Steps: 25000 | Catch Rate: 72.4%
+   [Prey] Steps: 50000 | Catch Rate: 24.0%
+   -> Prey Goal Reached!
+Result: 5.4 ± 2.3 caught | First catch @ step 111 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_15.gif...
+Captured 390 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_15.gif
+
+--- Cycle 16/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 29.2%
+   [Predator] Steps: 50000 | Catch Rate: 28.4%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 31.6%]
+   [Prey] Steps: 25000 | Catch Rate: 29.2%
+   -> Prey Goal Reached!
+Result: 7.0 ± 7.6 caught | First catch @ step 31 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_16.gif...
+Captured 398 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_16.gif
+
+--- Cycle 17/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 25.2%
+   [Predator] Steps: 50000 | Catch Rate: 4.4%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 36.8%]
+   [Prey] Steps: 25000 | Catch Rate: 14.8%
+   -> Prey Goal Reached!
+Result: 21.0 ± 7.0 caught | First catch @ step 34 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_17.gif...
+Captured 432 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_17.gif
+
+--- Cycle 18/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 26.0%
+   [Predator] Steps: 50000 | Catch Rate: 11.2%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 6.4%]
+   [Prey] Steps: 25000 | Catch Rate: 22.8%
+   -> Prey Goal Reached!
+Result: 11.0 ± 8.0 caught | First catch @ step 6 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_18.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_18.gif
+
+--- Cycle 19/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 38.8%
+   [Predator] Steps: 50000 | Catch Rate: 41.6%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 38.8%]
+   [Prey] Steps: 25000 | Catch Rate: 51.2%
+   [Prey] Steps: 50000 | Catch Rate: 80.0%
+Result: 28.8 ± 8.7 caught | First catch @ step 5 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_19.gif...
+Captured 488 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_19.gif
+
+--- Cycle 20/20 ---
+>> Training Predator (Goal: Catch >= 70%)...
+   [Predator] Steps: 25000 | Catch Rate: 51.6%
+   [Predator] Steps: 50000 | Catch Rate: 43.2%
+>> Training Prey (Goal: Catch <= 40%)...
+   [Baseline before prey training: 68.4%]
+   [Prey] Steps: 25000 | Catch Rate: 42.4%
+   [Prey] Steps: 50000 | Catch Rate: 39.2%
+   -> Prey Goal Reached!
+Result: 14.8 ± 9.7 caught | First catch @ step 17 | Starved: 0/5
+Generating GIF: output\bounded_no_obstacles\cycle_20.gif...
+Captured 500 frames. Saving GIF...
+Saved output\bounded_no_obstacles\cycle_20.gif
+Training Complete.
+Saved analysis to output\bounded_no_obstacles/coevolution_analysis.png

@@ -1,0 +1,187 @@
+can't invoke "event" command: application has been destroyed
+    while executing
+"event generate $w <<ThemeChanged>>"
+    (procedure "ttk::ThemeChanged" line 6)
+    invoked from within
+"ttk::ThemeChanged"
+============================================================
+CO-EVOLUTION EVALUATION: bounded_no_obstacles
+============================================================
+=== BASELINE COMPARISON ===
+Found models for cycles: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+Cycle 1:
+  Trained Pred vs Trained Prey: 34.5%
+  Trained Pred vs Random Prey:  7.6%
+  Random Pred vs Trained Prey:  10.1%
+
+Cycle 2:
+  Trained Pred vs Trained Prey: 19.7%
+  Trained Pred vs Random Prey:  6.4%
+  Random Pred vs Trained Prey:  5.2%
+
+Cycle 3:
+  Trained Pred vs Trained Prey: 20.3%
+  Trained Pred vs Random Prey:  7.0%
+  Random Pred vs Trained Prey:  7.9%
+
+Cycle 4:
+  Trained Pred vs Trained Prey: 16.9%
+  Trained Pred vs Random Prey:  7.7%
+  Random Pred vs Trained Prey:  7.8%
+
+Cycle 5:
+  Trained Pred vs Trained Prey: 21.5%
+  Trained Pred vs Random Prey:  8.3%
+  Random Pred vs Trained Prey:  7.4%
+
+Cycle 6:
+  Trained Pred vs Trained Prey: 39.0%
+  Trained Pred vs Random Prey:  7.3%
+  Random Pred vs Trained Prey:  0.5%
+
+Cycle 7:
+  Trained Pred vs Trained Prey: 31.0%
+  Trained Pred vs Random Prey:  8.0%
+  Random Pred vs Trained Prey:  4.9%
+
+Cycle 8:
+  Trained Pred vs Trained Prey: 42.6%
+  Trained Pred vs Random Prey:  8.9%
+  Random Pred vs Trained Prey:  0.1%
+
+Cycle 9:
+  Trained Pred vs Trained Prey: 53.9%
+  Trained Pred vs Random Prey:  7.8%
+  Random Pred vs Trained Prey:  1.6%
+
+Cycle 10:
+  Trained Pred vs Trained Prey: 35.1%
+  Trained Pred vs Random Prey:  7.4%
+  Random Pred vs Trained Prey:  0.2%
+
+Cycle 11:
+  Trained Pred vs Trained Prey: 12.4%
+  Trained Pred vs Random Prey:  7.5%
+  Random Pred vs Trained Prey:  0.3%
+
+Cycle 12:
+  Trained Pred vs Trained Prey: 21.2%
+  Trained Pred vs Random Prey:  7.8%
+  Random Pred vs Trained Prey:  0.4%
+
+Cycle 13:
+  Trained Pred vs Trained Prey: 35.0%
+  Trained Pred vs Random Prey:  8.3%
+  Random Pred vs Trained Prey:  1.1%
+
+Cycle 14:
+  Trained Pred vs Trained Prey: 22.5%
+  Trained Pred vs Random Prey:  8.9%
+  Random Pred vs Trained Prey:  0.0%
+
+Cycle 15:
+  Trained Pred vs Trained Prey: 9.5%
+  Trained Pred vs Random Prey:  8.6%
+  Random Pred vs Trained Prey:  0.0%
+
+Cycle 16:
+  Trained Pred vs Trained Prey: 23.5%
+  Trained Pred vs Random Prey:  9.0%
+  Random Pred vs Trained Prey:  0.2%
+
+Cycle 17:
+  Trained Pred vs Trained Prey: 27.9%
+  Trained Pred vs Random Prey:  7.1%
+  Random Pred vs Trained Prey:  0.0%
+
+Cycle 18:
+  Trained Pred vs Trained Prey: 26.7%
+  Trained Pred vs Random Prey:  6.2%
+  Random Pred vs Trained Prey:  0.1%
+
+Cycle 19:
+  Trained Pred vs Trained Prey: 60.8%
+  Trained Pred vs Random Prey:  6.9%
+  Random Pred vs Trained Prey:  1.5%
+
+Cycle 20:
+  Trained Pred vs Trained Prey: 33.0%
+  Trained Pred vs Random Prey:  8.2%
+  Random Pred vs Trained Prey:  1.2%
+
+=== GENERATING CYCLE GIFS ===
+Generating Cycle 1 replay...
+  Saved: output\bounded_no_obstacles\cycle_1.gif
+Generating Cycle 2 replay...
+  Saved: output\bounded_no_obstacles\cycle_2.gif
+Generating Cycle 3 replay...
+  Saved: output\bounded_no_obstacles\cycle_3.gif
+Generating Cycle 4 replay...
+  Saved: output\bounded_no_obstacles\cycle_4.gif
+Generating Cycle 5 replay...
+  Saved: output\bounded_no_obstacles\cycle_5.gif
+Generating Cycle 6 replay...
+  Saved: output\bounded_no_obstacles\cycle_6.gif
+Generating Cycle 7 replay...
+  Saved: output\bounded_no_obstacles\cycle_7.gif
+Generating Cycle 8 replay...
+  Saved: output\bounded_no_obstacles\cycle_8.gif
+Generating Cycle 9 replay...
+  Saved: output\bounded_no_obstacles\cycle_9.gif
+Generating Cycle 10 replay...
+  Saved: output\bounded_no_obstacles\cycle_10.gif
+Generating Cycle 11 replay...
+  Saved: output\bounded_no_obstacles\cycle_11.gif
+Generating Cycle 12 replay...
+  Saved: output\bounded_no_obstacles\cycle_12.gif
+Generating Cycle 13 replay...
+  Saved: output\bounded_no_obstacles\cycle_13.gif
+Generating Cycle 14 replay...
+  Saved: output\bounded_no_obstacles\cycle_14.gif
+Generating Cycle 15 replay...
+  Saved: output\bounded_no_obstacles\cycle_15.gif
+Generating Cycle 16 replay...
+  Saved: output\bounded_no_obstacles\cycle_16.gif
+Generating Cycle 17 replay...
+  Saved: output\bounded_no_obstacles\cycle_17.gif
+Generating Cycle 18 replay...
+  Saved: output\bounded_no_obstacles\cycle_18.gif
+Generating Cycle 19 replay...
+  Saved: output\bounded_no_obstacles\cycle_19.gif
+Generating Cycle 20 replay...
+  Saved: output\bounded_no_obstacles\cycle_20.gif
+
+=== CROSS-CYCLE TOURNAMENT (Cycles: [1, 5, 10, 15, 20]) ===
+
+Running matchups...
+  Pred C1 vs Prey C1: 38.0%
+  Pred C1 vs Prey C5: 25.9%
+  Pred C1 vs Prey C10: 36.9%
+  Pred C1 vs Prey C15: 15.1%
+  Pred C1 vs Prey C20: 19.2%
+  Pred C5 vs Prey C1: 48.5%
+  Pred C5 vs Prey C5: 27.4%
+  Pred C5 vs Prey C10: 25.2%
+  Pred C5 vs Prey C15: 6.5%
+  Pred C5 vs Prey C20: 32.0%
+  Pred C10 vs Prey C1: 43.9%
+  Pred C10 vs Prey C5: 26.6%
+  Pred C10 vs Prey C10: 30.5%
+  Pred C10 vs Prey C15: 16.6%
+  Pred C10 vs Prey C20: 19.4%
+  Pred C15 vs Prey C1: 59.4%
+  Pred C15 vs Prey C5: 45.2%
+  Pred C15 vs Prey C10: 48.9%
+  Pred C15 vs Prey C15: 8.9%
+  Pred C15 vs Prey C20: 23.8%
+  Pred C20 vs Prey C1: 67.0%
+  Pred C20 vs Prey C5: 63.5%
+  Pred C20 vs Prey C10: 53.0%
+  Pred C20 vs Prey C15: 23.6%
+  Pred C20 vs Prey C20: 28.5%
+
+Saved tournament matrix to output\bounded_no_obstacles/tournament_matrix_selected.png
+
+============================================================
+Evaluation complete!

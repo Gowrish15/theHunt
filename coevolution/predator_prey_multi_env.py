@@ -1,14 +1,19 @@
 import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
+import os
 
 class SharedConfig:
     """Configuration shared between both environments"""
     GRID_SIZE = 30
     N_PREY = 50
-    MAX_STEPS = 1000
+    MAX_STEPS = 500
     PREY_SPEED_MODIFIER = 2  # Prey skips move every 2nd step (50% speed)
     
+    # Environment Settings from Environment Variables
+    TOROIDAL = os.environ.get("ENV_TOROIDAL", "True").lower() == "true"
+    OBSTACLE_PCT = float(os.environ.get("ENV_OBSTACLE_PCT", "0.05"))
+
     # Energy System
     PREDATOR_START_ENERGY = 100.0
     PREDATOR_MAX_ENERGY = 200.0
@@ -45,7 +50,7 @@ class BasePredatorPreyEnv(gym.Env):
 
     def _generate_obstacles(self):
         obstacles = np.zeros((self.grid_size, self.grid_size), dtype=bool)
-        num_obs = int(self.grid_size * self.grid_size * 0.05)
+        num_obs = int(self.grid_size * self.grid_size * SharedConfig.OBSTACLE_PCT)
         obs_x = self._rng.integers(0, self.grid_size, num_obs)
         obs_y = self._rng.integers(0, self.grid_size, num_obs)
         obstacles[obs_x, obs_y] = True
@@ -56,8 +61,12 @@ class BasePredatorPreyEnv(gym.Env):
         deltas = self.move_deltas[actions]
         new_pos = positions + deltas
         
-        # Wrap around (0 -> 29, 29 -> 0)
-        new_pos = new_pos % self.grid_size
+        if SharedConfig.TOROIDAL:
+            # Wrap around (toroidal)
+            new_pos = new_pos % self.grid_size
+        else:
+            # Bounded (clip to edges)
+            new_pos = np.clip(new_pos, 0, self.grid_size - 1)
         
         # Check obstacles (if any exist)
         hit_obstacle = self.obstacles[new_pos[:, 0], new_pos[:, 1]]
@@ -68,10 +77,11 @@ class BasePredatorPreyEnv(gym.Env):
     def _get_toroidal_diff(self, pos1, pos2):
         """Calculate shortest vector from pos1 to pos2 on a torus"""
         diff = pos2 - pos1
-        half = self.grid_size / 2.0
-        # If diff > half, subtract size (wrap other way)
-        # If diff < -half, add size
-        diff = (diff + half) % self.grid_size - half
+        if SharedConfig.TOROIDAL:
+            half = self.grid_size / 2.0
+            # If diff > half, subtract size (wrap other way)
+            # If diff < -half, add size
+            diff = (diff + half) % self.grid_size - half
         return diff
 
     def _get_min_prey_dist(self):

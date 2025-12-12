@@ -1,12 +1,13 @@
 """
 RUN ALL - Complete training + evaluation pipeline for multiple configurations
-Runs experiments with different environment settings and compares them.
+Runs experiments in PARALLEL for maximum speed.
 """
 
 import os
 import shutil
 import subprocess
 import sys
+import time
 import json
 
 COEVOLUTION_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -20,96 +21,6 @@ EXPERIMENTS = [
     ("bounded_no_obstacles", False, 0.0),
 ]
 
-def update_env_config(toroidal: bool, obstacle_pct: float):
-    """Modify the environment file to use specified settings."""
-    env_file = os.path.join(COEVOLUTION_DIR, "predator_prey_multi_env.py")
-    
-    with open(env_file, 'r') as f:
-        content = f.read()
-    
-    # Update toroidal setting in _move_entities
-    if toroidal:
-        # Wrap around (toroidal)
-        content = content.replace(
-            "new_pos = np.clip(new_pos, 0, self.grid_size - 1)",
-            "new_pos = new_pos % self.grid_size"
-        )
-    else:
-        # Bounded (clip to edges)
-        content = content.replace(
-            "new_pos = new_pos % self.grid_size",
-            "new_pos = np.clip(new_pos, 0, self.grid_size - 1)"
-        )
-    
-    # Update obstacle percentage
-    import re
-    # Find and replace the obstacle generation line
-    old_pattern = r"num_obs = int\(self\.grid_size \* self\.grid_size \* [\d.]+\)"
-    new_line = f"num_obs = int(self.grid_size * self.grid_size * {obstacle_pct})"
-    content = re.sub(old_pattern, new_line, content)
-    
-    with open(env_file, 'w') as f:
-        f.write(content)
-
-def update_run_name(run_name: str):
-    """Update RUN_NAME in train_coevolution.py"""
-    train_file = os.path.join(COEVOLUTION_DIR, "train_coevolution.py")
-    
-    with open(train_file, 'r') as f:
-        content = f.read()
-    
-    import re
-    content = re.sub(
-        r'RUN_NAME = "[^"]*"',
-        f'RUN_NAME = "{run_name}"',
-        content
-    )
-    
-    with open(train_file, 'w') as f:
-        f.write(content)
-
-def run_experiment(run_name: str, toroidal: bool, obstacle_pct: float):
-    """Run a single experiment configuration."""
-    print(f"\n{'='*60}")
-    print(f"EXPERIMENT: {run_name}")
-    print(f"  Toroidal: {toroidal}")
-    print(f"  Obstacles: {obstacle_pct*100:.0f}%")
-    print(f"{'='*60}")
-    
-    # Clear old data for this run
-    models_dir = os.path.join(COEVOLUTION_DIR, "models", run_name)
-    output_dir = os.path.join(COEVOLUTION_DIR, "output", run_name)
-    
-    if os.path.exists(models_dir):
-        shutil.rmtree(models_dir)
-    if os.path.exists(output_dir):
-        shutil.rmtree(output_dir)
-    
-    # Update configs
-    update_env_config(toroidal, obstacle_pct)
-    update_run_name(run_name)
-    
-    # Run training
-    print("\n>> Training...")
-    train_script = os.path.join(COEVOLUTION_DIR, "train_coevolution.py")
-    result = subprocess.run([sys.executable, train_script], cwd=COEVOLUTION_DIR)
-    
-    if result.returncode != 0:
-        print(f"Training failed for {run_name}!")
-        return False
-    
-    # Run evaluation
-    print("\n>> Evaluating...")
-    eval_script = os.path.join(COEVOLUTION_DIR, "evaluate.py")
-    result = subprocess.run([sys.executable, eval_script, run_name], cwd=COEVOLUTION_DIR)
-    
-    if result.returncode != 0:
-        print(f"Evaluation failed for {run_name}!")
-        return False
-    
-    print(f"\n>> {run_name} complete!")
-    return True
-
 def generate_comparison_summary():
     """Generate a summary comparing all experiments."""
     print("\n" + "="*60)
@@ -120,17 +31,20 @@ def generate_comparison_summary():
     for run_name, toroidal, obs_pct in EXPERIMENTS:
         history_file = os.path.join(COEVOLUTION_DIR, "output", run_name, "history.json")
         if os.path.exists(history_file):
-            with open(history_file, 'r') as f:
-                history = json.load(f)
-            
-            if history.get("avg_caught"):
-                final_catch = history["avg_caught"][-1]
-                results[run_name] = {
-                    "toroidal": toroidal,
-                    "obstacles": obs_pct,
-                    "final_catch_rate": final_catch / 50 * 100,
-                    "cycles": len(history["avg_caught"])
-                }
+            try:
+                with open(history_file, 'r') as f:
+                    history = json.load(f)
+                
+                if history.get("avg_caught"):
+                    final_catch = history["avg_caught"][-1]
+                    results[run_name] = {
+                        "toroidal": toroidal,
+                        "obstacles": obs_pct,
+                        "final_catch_rate": final_catch / 50 * 100,
+                        "cycles": len(history["avg_caught"])
+                    }
+            except Exception as e:
+                print(f"Error reading history for {run_name}: {e}")
     
     print(f"\n{'Experiment':<30} {'Toroidal':<10} {'Obstacles':<10} {'Final Catch%':<12}")
     print("-" * 62)
@@ -144,40 +58,89 @@ def generate_comparison_summary():
         json.dump(results, f, indent=2)
     print(f"\nSaved: {summary_file}")
 
-def main():
-    print("="*60)
-    print("MULTI-EXPERIMENT PIPELINE")
-    print(f"Running {len(EXPERIMENTS)} configurations...")
-    print("="*60)
-    
-    successful = []
-    failed = []
+def run_experiments_parallel():
+    # 1. TRAINING PHASE
+    training_processes = []
+    print(f"Launching {len(EXPERIMENTS)} TRAINING experiments in parallel...")
     
     for run_name, toroidal, obstacle_pct in EXPERIMENTS:
-        if run_experiment(run_name, toroidal, obstacle_pct):
-            successful.append(run_name)
+        print(f"Preparing: {run_name} (Toroidal={toroidal}, Obstacles={obstacle_pct})")
+        
+        # Clear old data
+        models_dir = os.path.join(COEVOLUTION_DIR, "models", run_name)
+        output_dir = os.path.join(COEVOLUTION_DIR, "output", run_name)
+        
+        if os.path.exists(models_dir):
+            try: shutil.rmtree(models_dir)
+            except: pass
+        if os.path.exists(output_dir):
+            try: shutil.rmtree(output_dir)
+            except: pass
+            
+        # Prepare Env Vars
+        env = os.environ.copy()
+        env["RUN_NAME"] = run_name
+        env["ENV_TOROIDAL"] = str(toroidal)
+        env["ENV_OBSTACLE_PCT"] = str(obstacle_pct)
+        env["N_ENVS"] = "4" 
+        env["SKIP_GIFS"] = "False"
+        
+        train_script = os.path.join(COEVOLUTION_DIR, "train_coevolution.py")
+        log_file = os.path.join(COEVOLUTION_DIR, f"{run_name}_train.log")
+        
+        with open(log_file, "w") as f:
+            p = subprocess.Popen(
+                [sys.executable, train_script], 
+                cwd=COEVOLUTION_DIR,
+                env=env,
+                stdout=f,
+                stderr=subprocess.STDOUT
+            )
+        training_processes.append((run_name, p, env))
+        print(f"Started TRAINING {run_name} (PID: {p.pid}) - Logging to {log_file}")
+        
+    print(f"\nAll training experiments running. Please wait...")
+    
+    # Wait for training completion
+    successful_runs = []
+    for run_name, p, env in training_processes:
+        p.wait()
+        if p.returncode != 0:
+            print(f"Training {run_name} FAILED with code {p.returncode}. Check log.")
         else:
-            failed.append(run_name)
+            print(f"Training {run_name} COMPLETED.")
+            successful_runs.append((run_name, env))
+
+    # 2. EVALUATION PHASE
+    print(f"\nStarting EVALUATION for {len(successful_runs)} successful runs...")
+    eval_processes = []
     
-    # Generate comparison
+    for run_name, env in successful_runs:
+        eval_script = os.path.join(COEVOLUTION_DIR, "evaluate.py")
+        log_file = os.path.join(COEVOLUTION_DIR, f"{run_name}_eval.log")
+        
+        # Evaluate needs the same env vars to configure the environment correctly
+        with open(log_file, "w") as f:
+            p = subprocess.Popen(
+                [sys.executable, eval_script, run_name], 
+                cwd=COEVOLUTION_DIR,
+                env=env,
+                stdout=f,
+                stderr=subprocess.STDOUT
+            )
+        eval_processes.append((run_name, p))
+        print(f"Started EVALUATION {run_name} (PID: {p.pid})")
+
+    # Wait for evaluation completion
+    for run_name, p in eval_processes:
+        p.wait()
+        if p.returncode != 0:
+            print(f"Evaluation {run_name} FAILED.")
+        else:
+            print(f"Evaluation {run_name} COMPLETED.")
+
+    # 3. SUMMARY
     generate_comparison_summary()
-    
-    # Final summary
-    print("\n" + "="*60)
-    print("ALL EXPERIMENTS COMPLETE")
-    print("="*60)
-    print(f"\nSuccessful: {len(successful)}/{len(EXPERIMENTS)}")
-    for name in successful:
-        print(f"  ✓ {name}")
-    if failed:
-        print(f"\nFailed: {len(failed)}")
-        for name in failed:
-            print(f"  ✗ {name}")
-    
-    print(f"\nOutputs in: {os.path.join(COEVOLUTION_DIR, 'output')}")
-    print(f"Models in: {os.path.join(COEVOLUTION_DIR, 'models')}")
-    
-    return 0 if not failed else 1
 
 if __name__ == "__main__":
-    sys.exit(main())
+    run_experiments_parallel()
