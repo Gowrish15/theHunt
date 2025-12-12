@@ -1,0 +1,38 @@
+{
+  "cycle": [
+    1,
+    2
+  ],
+  "avg_caught": [
+    15.4,
+    26.8
+  ],
+  "std_caught": [
+    7.939773296511683,
+    9.987992791347018
+  ],
+  "avg_steps": [
+    1000.0,
+    1000.0
+  ],
+  "avg_first_catch": [
+    53.4,
+    5.8
+  ],
+  "pred_training_steps": [
+    50000,
+    50000
+  ],
+  "prey_training_steps": [
+    50000,
+    50000
+  ],
+  "predator_starved": [
+    0,
+    0
+  ],
+  "all_prey_caught": [
+    0,
+    0
+  ]
+}
